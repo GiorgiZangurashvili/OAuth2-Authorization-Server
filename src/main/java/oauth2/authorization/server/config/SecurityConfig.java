@@ -76,56 +76,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService() {
-        var uds = new InMemoryUserDetailsManager();
-
-        var user1 = User
-                .withUsername("user")
-                .password(passwordEncoder().encode("password"))
-                .authorities("read")
-                .build();
-
-        var user2 = User
-                .withUsername("admin")
-                .password(passwordEncoder().encode("admin"))
-                .authorities("read", "write", "delete")
-                .build();
-
-        uds.createUser(user1);
-        uds.createUser(user2);
-
-        return uds;
-    }
-
-    @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+//        return new BCryptPasswordEncoder();
 
-    // OAuth2 also involves client, besides users
-    @Bean
-    public RegisteredClientRepository registeredClientRepository() {
-        RegisteredClient rc1 = RegisteredClient
-                .withId(UUID.randomUUID().toString())
-                .clientId("client")
-                .clientSecret(passwordEncoder().encode("secret"))
-                .scope(OidcScopes.OPENID)
-                .redirectUri("https://springone.io/authorized")
-                .tokenSettings(
-                    TokenSettings.builder()
-                            // non-opaque token (for example: jwt)
-                            .accessTokenFormat(OAuth2TokenFormat.SELF_CONTAINED)
-                            // opaque token
-//                            .accessTokenFormat(OAuth2TokenFormat.REFERENCE)
-                            .accessTokenTimeToLive(Duration.ofSeconds(300))
-                            .build()
-                )
-                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
-                .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
-                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .build();
-
-        return new InMemoryRegisteredClientRepository(rc1);
+        // for demonstration purpose
+        // forgot to add encrypted passwords in database
+        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean
