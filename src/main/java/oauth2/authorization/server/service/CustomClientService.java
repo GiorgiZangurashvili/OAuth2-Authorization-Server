@@ -8,6 +8,7 @@ import oauth2.authorization.server.repository.ClientRepository;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClientRepository;
 import org.springframework.stereotype.Service;
+
 @Service
 @RequiredArgsConstructor
 public class CustomClientService implements RegisteredClientRepository {
