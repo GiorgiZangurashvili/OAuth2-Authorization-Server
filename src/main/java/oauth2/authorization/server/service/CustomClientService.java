@@ -25,8 +25,6 @@ public class CustomClientService implements RegisteredClientRepository {
                 .orElseThrow(
                         () -> new ClientNotFoundException(String.format("Client with id = %s not found", id)
                         ));
-        System.out.println(client);
-        System.out.println(registeredClientMapper.mapClientToRegisteredClient(client));
         return registeredClientMapper.mapClientToRegisteredClient(client);
     }
 
@@ -36,8 +34,6 @@ public class CustomClientService implements RegisteredClientRepository {
                 .orElseThrow(
                         () -> new ClientNotFoundException(String.format("Client with client_id = %s not found", clientId)
                         ));
-        System.out.println(client);
-        System.out.println(registeredClientMapper.mapClientToRegisteredClient(client));
         return registeredClientMapper.mapClientToRegisteredClient(client);
     }
 }
