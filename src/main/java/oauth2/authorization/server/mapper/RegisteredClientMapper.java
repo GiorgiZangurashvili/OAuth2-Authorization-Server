@@ -4,7 +4,11 @@ import oauth2.authorization.server.entity.Client;
 import org.springframework.security.oauth2.core.AuthorizationGrantType;
 import org.springframework.security.oauth2.core.ClientAuthenticationMethod;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
+import org.springframework.security.oauth2.server.authorization.settings.OAuth2TokenFormat;
+import org.springframework.security.oauth2.server.authorization.settings.TokenSettings;
 import org.springframework.stereotype.Component;
+
+import java.time.Duration;
 
 @Component
 public class RegisteredClientMapper {
@@ -40,6 +44,13 @@ public class RegisteredClientMapper {
                 .redirectUri(client.getRedirectUri())
                 .clientAuthenticationMethod(new ClientAuthenticationMethod(client.getAuthMethod()))
                 .authorizationGrantType(new AuthorizationGrantType(client.getGrantType()))
+                // for client application
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .tokenSettings(TokenSettings
+                        .builder()
+                        .accessTokenTimeToLive(Duration.ofSeconds(900))
+//                        .accessTokenFormat(OAuth2TokenFormat.REFERENCE)
+                        .build())
                 .build();
     }
 
